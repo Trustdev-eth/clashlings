@@ -1,8 +1,12 @@
 :root{
   color-scheme: dark;
-  --paper:#0d1c27; --surface:#172d3b; --raised:#203b4b; --recess:#102330;
-  --ink:#eef5fa; --muted:#adc3d0; --line:#365463; --gold:#f5ce70;
-  --yellow:#f5ce70; --blue:#49b8e5; --purple:#c394f5; --danger:#ff8998;
+  --paper:#120c2e; --surface:#231a52; --raised:#30256b; --recess:#18113d;
+  --ink:#f7f4ff; --muted:#bdb3e3; --line:#463a8a; --gold:#ffc83d;
+  --yellow:#ffc83d; --blue:#3fc6ff; --purple:#c07bff; --danger:#ff5d7a;
+  --pink:#ff5ed1; --mint:#3df5c8; --ally:#2fa8ff; --rival:#ff4d6d;
+  --gold-grad:linear-gradient(180deg,#fff08a 0%,#ffc83d 45%,#ff9f1a 100%);
+  --blue-grad:linear-gradient(180deg,#6fd8ff 0%,#3b8cff 55%,#3a4fe0 100%);
+  --panel-grad:linear-gradient(180deg,#2c2166 0%,#1e1648 100%);
   --white:var(--surface); --radius:10px;
   font-family:Inter,"Segoe UI",Arial,sans-serif; font-synthesis:none;
   color:var(--ink); background:var(--paper);

@@ -1,0 +1,120 @@
+/* Arcade skin: vivid night-arena colors layered over the structural styles. Loaded last. */
+
+/* Backdrop */
+html,body{background:#0e0a26}
+body{background:
+  radial-gradient(1100px 620px at 8% -12%,#7b3cff4d,transparent 62%),
+  radial-gradient(900px 600px at 108% 105%,#00b4ff38,transparent 60%),
+  radial-gradient(760px 480px at 55% 125%,#ff3d9a2e,transparent 62%),
+  linear-gradient(180deg,#171040 0%,#0e0a26 100%) fixed}
+.app-shell{background:transparent}
+.loading-game{background:radial-gradient(600px 400px at 50% 40%,#5a2fd04d,transparent 70%),#0e0a26}
+.loading-game strong{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 #8a3d00)}
+::selection{background:#ffc83d55}
+*{scrollbar-color:#5b4bb0 transparent}
+
+/* Header */
+.topbar{border-bottom:1px solid #ffffff12;box-shadow:0 1px 0 #8f6bff26}
+.brand b{background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 0 #7a3600) drop-shadow(0 0 14px #ffb52e40)}
+.brand small{color:#a99be0}
+.brand-mark{background:var(--gold-grad);border-color:#fff3b0;color:#4a2600;box-shadow:0 3px 0 #a35400,0 0 20px #ffb52e66}
+.desktop-nav{padding:4px;border:1px solid #ffffff14;border-radius:14px;background:#ffffff08}
+.desktop-nav button{border-radius:10px;color:#c9c0ee}
+.desktop-nav button.active{background:var(--gold-grad);color:#3d1f00;box-shadow:0 3px 0 #b06a00,0 0 20px #ffb52e55;text-shadow:0 1px 0 #fff6}
+.desktop-nav button:hover:not(.active){background:#ffffff14;color:#fff}
+.balance-chip{border-color:#ffc83d80;background:linear-gradient(180deg,#3d2c7c,#281d5c);box-shadow:inset 0 1px 0 #ffffff1f,0 0 14px #ffc83d26}
+.balance-chip b{color:#ffe17a}.balance-chip small{color:#d6c9a0}
+.trainer-chip .sprite{background-color:#3a2a7c;box-shadow:0 0 0 2px #ffc83d,0 0 12px #ffc83d66}
+.icon-button{color:#d9d1ff}.icon-button:hover{background:#ffffff14;border-color:#ffffff24}
+.page-icon,.page-meta>.icon{color:var(--gold)}
+.page-context{border-left-color:#ffffff24}
+
+/* Surfaces */
+.panel,.upgrade-promo,.collection-item,.ranks-intro{background:var(--panel-grad);border:1px solid #6a58c84d;box-shadow:inset 0 1px 0 #ffffff17,0 12px 30px #05021a80}
+.eyebrow{color:#ffcf4a;text-shadow:0 0 12px #ffb52e40}
+.text-button{color:#ffd970}.text-button:hover{color:#fff3c0}
+.positive{color:#5cf2b8}.negative{color:#ff7d97}
+.tip-badge{background:#3d2a7a;border-color:#8a6bff;color:#ffe9a8}
+.rank-number{background:#2a2063;border-color:#5b4bb0;color:#e0d8ff}
+.result-tag{background:#2c2266;border-color:#5b4bb0;color:#ddd5ff}.result-tag.win{background:#16473f;border-color:#2fd3a0;color:#8fffd6}
+.rank-emblem,.queue-emblem{border-color:#ffc83d99;background:radial-gradient(circle,#ffc83d40,#7b3cff1a);box-shadow:0 0 30px #ffc83d33}
+.help-shortcuts{background:#18113d;border-color:#5b4bb0}
+.room-code{background:#18113d;border-color:#ffc83d99;color:#ffe17a}
+
+/* Buttons: chunky arcade keys */
+.button{border-radius:12px;font-weight:850;letter-spacing:.01em}
+.primary{background:var(--gold-grad);color:#3b1d00;border-color:#fff2a6;box-shadow:0 4px 0 #b4610a,0 10px 22px #ff9f1a3d;text-shadow:0 1px 0 #fff7}
+.primary:hover{background:var(--gold-grad);filter:brightness(1.08);box-shadow:0 5px 0 #b4610a,0 12px 28px #ff9f1a5c}
+.primary:active{box-shadow:0 1px 0 #b4610a,0 4px 10px #ff9f1a33}
+.secondary{background:var(--blue-grad);color:#fff;border-color:#a8c4ff;box-shadow:0 4px 0 #2626a0,0 10px 22px #3b6bff33;text-shadow:0 1px 1px #1a1a7a}
+.secondary:hover{background:var(--blue-grad);filter:brightness(1.1)}
+.secondary:active{box-shadow:0 1px 0 #2626a0}
+.danger{background:linear-gradient(180deg,#ff8aa0,#ff3d6e 55%,#d0204f);color:#fff;border-color:#ffc0cc;box-shadow:0 4px 0 #8a1035}
+.mode-tabs,.difficulty-pick,.stake-pick,.filter-tabs{background:#150f36;border-color:#4a3d8a}
+.mode-tabs button,.difficulty-pick button,.stake-pick button,.filter-tabs button{color:#bdb3e3}
+.mode-tabs button.active,.difficulty-pick button.active,.stake-pick button.active,.filter-tabs button.active,.battle-screen .play-panel .mode-tabs .active{background:var(--gold-grad);color:#3d1f00;box-shadow:0 2px 0 #b06a00,0 0 14px #ffb52e40}
+.mode-tabs button:hover:not(.active),.difficulty-pick button:hover:not(.active),.stake-pick button:hover:not(.active),.filter-tabs button:hover:not(.active){background:#ffffff14;color:#fff}
+
+/* Creature cards glow in their token color */
+.creature-card{border:1.5px solid color-mix(in srgb,var(--card-color,#8a6bff) 65%,#6b5bc0);background:radial-gradient(120% 85% at 50% 8%,color-mix(in srgb,var(--card-color,#8a6bff) 42%,#2a1f5c) 0%,#1a1342 72%);box-shadow:inset 0 1px 0 #ffffff26,0 4px 0 #0a0624}
+.creature-card:hover{border-color:var(--card-color,#8a6bff);box-shadow:inset 0 1px 0 #ffffff26,0 6px 0 #0a0624,0 0 24px color-mix(in srgb,var(--card-color,#8a6bff) 55%,transparent)}
+.collection-item>.creature-card,.collection-item>.creature-card:hover{background:radial-gradient(120% 85% at 50% 8%,color-mix(in srgb,var(--card-color,#8a6bff) 42%,#2a1f5c) 0%,#1a1342 72%)}
+.card-title{text-shadow:0 1px 2px #0a0624}
+.cost{border-color:#ffd1f6;background:linear-gradient(160deg,#ff8ae4,#b44dff 55%,#6a1fd6);box-shadow:0 2px 0 #3d0d7a,0 0 10px #d65bff66;text-shadow:0 1px 2px #3d0d7a}
+.detail-art{background:radial-gradient(ellipse,color-mix(in srgb,var(--card-color) 40%,#2c2166),#170f3a);border-color:color-mix(in srgb,var(--card-color) 60%,#5b4bb0)}
+.level-pill{border-color:#ffc83d99;background:#ffc83d26;color:#ffe9a8}
+
+/* Battle frame and HUD */
+.battle-screen .arena-frame{border:2px solid #6d5bd0;border-radius:16px;background:#120c2e;box-shadow:inset 0 0 0 1px #ffffff12,0 0 44px #7a4dff40,0 18px 50px #05021a99}
+.battle-screen .battle-score{background:linear-gradient(90deg,#ff3d6e40 0%,#231a52 32%,#231a52 68%,#2fa8ff40 100%);border-bottom:1px solid #ffffff1c}
+.battle-screen .opponent-name .icon{color:#ff6b88}
+.battle-screen .score-label{color:#ffd54a;text-shadow:0 0 12px #ffb52e80}
+.battle-screen .timer{border:2px solid #ffc83d;border-radius:10px;background:linear-gradient(180deg,#1f1548,#0c0824);color:#fff;text-shadow:0 0 10px #ffd36aaa;box-shadow:0 0 18px #ffb52e55,inset 0 0 10px #ffb52e22}
+.battle-screen .timer.urgent{border-color:#ff5d7a;background:linear-gradient(180deg,#6a1530,#3a0a1c);box-shadow:0 0 20px #ff3d6e88;animation:timer-urgent 1s ease-in-out infinite}
+.battle-screen .canvas-wrap,.battle-screen .canvas-wrap canvas{background:#140e36}
+.battle-screen .scene-badge,.battle-screen .scene-actions{background:#140e34d9;border-color:#7a68e066;color:#ece6ff}
+.battle-screen .scene-badge i{background:var(--mint);box-shadow:0 0 8px var(--mint)}
+.battle-screen .scene-actions button{color:#ece6ff}.battle-screen .scene-actions button:hover{background:#ffffff1f;color:#fff}
+.battle-screen .arena-overlay{background:linear-gradient(180deg,#2c2166f0,#1b1446f0);border-color:#8a75ff80;box-shadow:0 0 30px #7a4dff40,0 8px 30px #0006}
+.pause-overlay{background:#120c2ee6}
+.battle-screen .battle-control{background:linear-gradient(180deg,#271d5e,#18113d);border-left:1px solid #6a58c84d}
+.battle-screen[data-dock=bottom] .battle-control{border-top:1px solid #6a58c84d}
+.battle-screen .hand-heading{color:#ddd5ff}
+.battle-screen .hand-card{border-color:color-mix(in srgb,var(--card-color,#8a6bff) 70%,#ffffff)}
+.battle-screen .hand-card.selected,.battle-screen[data-dock=bottom] .hand-card.selected{border-color:#fff3a8;background:radial-gradient(120% 85% at 50% 8%,color-mix(in srgb,var(--card-color,#8a6bff) 60%,#4a3a9a) 0%,#2a1f5c 75%);box-shadow:0 0 0 2px #ffc83d,0 0 22px #ffc83daa,0 4px 0 #0a0624}
+.battle-screen .hand-card.not-ready{filter:saturate(.35) brightness(.8);opacity:.75}
+.battle-screen .next-card{border-color:#ffffff1c}.battle-screen .next-card>span{color:#bdb3e3}
+.battle-screen .elixir-label{color:#ff9cf0;text-shadow:0 0 10px #ff5ed180}
+.battle-screen #elixir-rate{color:#f0c4ff}
+.battle-screen .elixir-bar{border:1px solid #d68bff;border-radius:6px;background:#1a0f3a;box-shadow:inset 0 2px 4px #0008}
+.battle-screen .elixir-bar>span{background:linear-gradient(90deg,#ff5ed1,#b44dff);box-shadow:0 0 12px #d65bffaa}
+.battle-screen .elixir-bar i{background:#0a052080}
+.battle-screen .lane-controls button{border:1px solid #a8c4ff;border-radius:9px;background:var(--blue-grad);color:#fff;font-weight:800;box-shadow:0 3px 0 #2626a0;text-shadow:0 1px 1px #1a1a7a}
+.battle-screen .lane-controls button:hover{background:var(--blue-grad);filter:brightness(1.12)}
+.battle-screen .lane-controls button:active{transform:translateY(2px);box-shadow:0 1px 0 #2626a0}
+.health-label{--hp:#3fc6ff;--edge:#b5ecff}
+.health-label.is-rival{--hp:#ff4d6d;--edge:#ffb3c1}
+.health-name{background:#140e34ee}
+
+/* Dialogs and toasts */
+.modal-backdrop{background:#07041ac2}
+.modal{background:radial-gradient(500px 220px at 50% -10%,#7b3cff33,transparent 70%),linear-gradient(180deg,#2d2168,#1b1446);border:1px solid #7d6be080;box-shadow:inset 0 1px 0 #ffffff1c,0 30px 100px #000a,0 0 60px #7a4dff33}
+.modal-close{background:#1a1342;border-color:#6a5ad0;color:#e0d8ff}
+.modal label{color:#e0d8ff}
+input{background:#140e34;border-color:#5b4bb0;color:#f7f4ff}input::placeholder{color:#8f84c0}
+#toast{background:linear-gradient(180deg,#3a2b80,#281e5e);border-color:#8f7bff;box-shadow:0 12px 36px #0008,0 0 24px #7a4dff40}
+.modal.result-modal{border-color:#ffc83d99;background:radial-gradient(ellipse at 50% 9%,#ffb52e40,transparent 52%),linear-gradient(160deg,#33257a,#1a1342 85%)}
+.modal.result-modal.is-defeat{border-color:#ff5d7a80;background:radial-gradient(ellipse at 50% 12%,#ff3d6e33,transparent 52%),linear-gradient(160deg,#2e2066,#1a1342 85%)}
+.modal.result-modal.is-draw{border-color:#3fc6ff80;background:radial-gradient(ellipse at 50% 12%,#3fc6ff2e,transparent 52%),linear-gradient(160deg,#2a2370,#1a1342 85%)}
+.result-scoreboard{background:#120c2ec9;border-color:#5b4bb0}
+.result-scoreboard>div:first-child b{color:#5fd6ff}.result-scoreboard>div:last-child b{color:#ff7d97}
+
+/* Mobile navigation */
+@media(max-width:759px){
+ .mobile-nav{background:#140e34f2;border-top-color:#6a58c84d}
+ .mobile-nav button{color:#c9c0ee}
+ .mobile-nav button.active{color:var(--gold)}
+ .mobile-nav button.active .icon{background:var(--gold);color:#3d1f00;box-shadow:0 0 0 5px var(--gold),0 0 16px 5px #ffb52e66}
+}
+
+@keyframes timer-urgent{50%{box-shadow:0 0 30px #ff3d6ecc}}
