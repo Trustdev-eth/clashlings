@@ -1,0 +1,26 @@
+{
+  "environment": "local-workerd-with-mocked-account-oracle-service",
+  "players": 500,
+  "matches": 250,
+  "durationSeconds": 10,
+  "setupMs": 5444,
+  "snapshots": 47079,
+  "bytes": 90387668,
+  "uniqueCommands": 1000,
+  "acknowledged": 1000,
+  "missingAcknowledgements": 0,
+  "duplicateAcknowledgements": 100,
+  "protocolErrors": 0,
+  "privacyErrors": 0,
+  "ackMs": {
+    "p50": 947.21,
+    "p95": 1647.56,
+    "p99": 1769.34
+  },
+  "snapshotGapMs": {
+    "p95": 174.2,
+    "p99": 208.04
+  },
+  "minSnapshotsPerConnection": 88,
+  "notes": "A local concurrency test, not a production capacity or browser/GPU certification. Account service, oracle and settlement are mocks."
+}

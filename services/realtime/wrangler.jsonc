@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "clashlings-realtime",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "durable_objects": {"bindings": [{"name": "MATCHES", "class_name": "MatchRoom"}]},
+  "migrations": [{"tag": "v1", "new_sqlite_classes": ["MatchRoom"]}],
+  "vars": {"SITE_ORIGIN": "https://clashlings-creature-arena.dillon425.chatgpt.site"},
+  "observability": {"enabled": true},
+  "limits": {"cpu_ms": 30000}
+}
