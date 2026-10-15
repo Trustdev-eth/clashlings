@@ -23,7 +23,7 @@ export class Predictor {
  frame(now=performance.now()){
   if(!this.state)return null;
   if(this.lastFrame!==null&&this.target!==null){const slew=Math.max(0,(now-this.lastFrame)/1000)*.1;this.offset+=Math.max(-slew,Math.min(slew,this.target-this.offset));}this.lastFrame=now;
-  const goal=Math.min(now/1000+this.offset,this.auth.time+this.maxAhead);
+  const goal=this.time=Math.min(now/1000+this.offset,this.auth.time+this.maxAhead);
   for(let n=0;this.state.status==='playing'&&this.state.time+STEP<=goal+1e-6&&n<6;n++)step(this.state);
   return this.state;
  }
