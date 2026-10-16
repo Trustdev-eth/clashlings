@@ -58,3 +58,14 @@ next-env.d.ts
 # Safe configuration-name template and private local load fixtures.
 !.env.example
 /staging-tickets*.json
+
+# Solana program build output. Adapter dependencies are local to that package.
+/services/contracts/target/
+/services/contracts/test-ledger/
+/services/contracts/.anchor/
+/services/contracts/programs/*/target/
+/services/contracts/adapter/node_modules/
+/services/contracts/adapter/.sites-runtime/
+/services/contracts/adapter/.dev-keypair.json
+/services/contracts/adapter/.dev-secret*
+/services/contracts/.program-keypair.json

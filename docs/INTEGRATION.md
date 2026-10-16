@@ -1,6 +1,6 @@
 # Deployment and contract integration
 
-The Sites publication runs the frontend, wallet sessions, D1 accounts, rewards, credit economy, oracle cache and contract bridge. The realtime Worker is a separate deployment. No smart contract, token issuance, Robinhood integration or production token transfer has been deployed by this project.
+The Sites publication runs the frontend, wallet sessions, D1 accounts, rewards, credit economy, oracle cache and contract bridge. The realtime Worker is a separate deployment. The Solana staking/escrow program and its HTTP adapter live in `services/contracts`. Token issuance and a production mint are still owner-supplied; do not enable `LIVE_TOKEN_ENABLED` until the program, mint, adapter and settlement key are deployed and qualified.
 
 ## Configuration
 
@@ -18,8 +18,9 @@ Set runtime values with the hosting environment's secret/configuration controls.
 | `GAME_TOKEN_MINT` | Sites config | Owner's SPL game-token mint |
 | `GAME_TOKEN_DECIMALS` | Sites config | Integer 0–12, default 9; use the mint's actual decimals |
 | `GAME_TOKEN_SYMBOL` | Sites config | Game-token display symbol, default `GAME` |
-| `GAME_PROGRAM_ID` | Sites config | Owner's audited game/staking/escrow program |
-| `CONTRACT_ADAPTER_URL` | Sites config | Owner's HTTPS adapter origin implementing the protocol below |
+| `GAME_PROGRAM_ID` | Sites config | Arena staking/escrow program (`95knjFtSkTZS6vj7aJgFa5Ty8ArDKZmSnwfGyqAhLZom` on the current devnet deploy) |
+| `GAME_TOKEN_CHAIN` | Sites config | Wallet Standard chain, default `solana:mainnet`; use `solana:devnet` or `solana:localnet` when testing |
+| `CONTRACT_ADAPTER_URL` | Sites config | Adapter origin. HTTPS in production; `http://127.0.0.1:8788` is allowed locally (same rule as `REALTIME_URL`) |
 | `CONTRACT_ADAPTER_KEY` | Sites secret + adapter secret | Shared server-only HMAC key for adapter requests/callbacks |
 | `STAKE_LOCK_SECONDS` | Sites config | Default 604800 (7 days), minimum 86400 |
 | `LIVE_TOKEN_ENABLED` | Sites config | Keep `false` until actual integration and staging qualification; enable explicitly with `true` |
@@ -38,13 +39,13 @@ The Worker runs a 100 ms authoritative tick and broadcasts compact snapshots. Fu
 
 ## Contract adapter protocol
 
-This adapter is the owner's server component that understands their actual program/IDL and uses a reliable Solana RPC provider. This repository implements the game-side client, authenticated receipt callback, wallet envelope guards and test adapter fixtures. The live adapter needs the owner's actual program/IDL; this project does not invent a deployed program interface or treat fixture receipts as on-chain proof.
+This adapter is the owner's server component that understands the arena program and uses a reliable Solana RPC provider. This repository ships a matching implementation in `services/contracts/adapter` (HMAC, envelope layout, PDA derivation, on-chain verify, settlement). Replace RPC/mint/program/settlement-key values before any live funds. Test fixtures in `tests/` still mock the adapter and are not on-chain proof.
 
 Every request is JSON. `x-arena-auth` contains the HMAC-SHA256 token produced by `signedHeaders()` in `lib/security.js`: payload `{aud: "arena-service", exp: <epoch milliseconds>, hash: <base64url SHA256 of exact UTF-8 request body>, nonce: <UUID>}`. Verify with the shared adapter key and expiry before decoding an operation. TLS is required. Every operation must be idempotent by the provided intent/settlement ID.
 
 ### POST `/v1/prepare`
 
-Input includes `id`, `kind` (`stake`, `escrow`, `refund`, `unstake`), `wallet`, `amountUnits` (decimal integer string), `card`, `targetLevel`, `matchId`, `side`, `position` when applicable, `createdAt`, `expiresAt`, `lockUntil`, plus configured `programId`, `mint`, `decimals`, `chain: "solana:mainnet"`.
+Input includes `id`, `kind` (`stake`, `escrow`, `refund`, `unstake`), `wallet`, `amountUnits` (decimal integer string), `card`, `targetLevel`, `matchId`, `side`, `position` when applicable, `createdAt`, `expiresAt`, `lockUntil`, plus configured `programId`, `mint`, `decimals`, and `chain` (`solana:mainnet` by default).
 
 Return `{intentId, transaction, expiresAt}`. `transaction` is an unsigned/partially signed base64 Solana legacy or v0 transaction. The wallet must be the fee payer, all account keys must be static, and the only top-level programs permitted are the configured game program and Compute Budget. A game instruction must explicitly include the wallet and mint. Associated-token-account creation and transfers must occur through the game program's checked CPI path. Address lookup tables are deliberately rejected by the envelope guard until a verified resolver is added. Do not include unrelated transfers, delegates or approvals. Encode/check the complete intent in the game instruction, not only its amount.
 
@@ -79,7 +80,7 @@ Pending response: `{finalized:false}`. It grants nothing. A successful finalized
 
 `blockTime` and lock times are epoch **milliseconds**, unlike Solana RPC's seconds. The server requires blockTime within the intent interval (15-second skew tolerance), rejects mismatched receipts, deduplicates signatures and position PDAs, and grants levels only after finality. Each staking intent must have a unique immutable position PDA; aggregate stake by summing active positions. Lock terms must prevent early withdrawal; before token matches, `/v1/positions` rechecks active positions.
 
-For escrow, include `matchId`, `side`, `locked:true`. For refund, include `matchId`, `refunded:true`, and the original escrow position. For unstake, include the original staking position and `withdrawn:true`. Refund/withdrawal destinations must be the original verified wallet. The contract must independently enforce cancellation/expiry eligibility and prevent double payout/refund, regardless of the browser or adapter.
+For escrow, include `matchId`, `side`, `locked:true`. For refund, include `matchId`, `refunded:true`, and the original escrow position. For unstake, include the original staking position and `withdrawn:true`. Refund/withdrawal destinations must be the original verified wallet. The included program independently blocks mid-match refunds: once both sides have locked, `refund_escrow` fails until `settlement_authority` marks the match cancelled. The adapter does that automatically on `/v1/prepare` for `kind=refund`. Incomplete (one-sided) deposits can refund without cancel. Settled matches cannot be cancelled or refunded.
 
 The browser never sends a trusted balance, level, winner or payout. Prepared intents can be verified after their wall-clock TTL for recovery, but the finalized transaction's blockTime must still satisfy the original intent interval. Trainer displays unresolved transaction signatures for resuming confirmation, refundable escrows, expired staking positions and settlement status.
 

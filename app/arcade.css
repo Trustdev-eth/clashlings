@@ -30,7 +30,7 @@ body{background:
 .page-context{border-left-color:#ffffff24}
 
 /* Surfaces */
-.panel,.upgrade-promo,.collection-item,.ranks-intro{background:var(--panel-grad);border:1px solid #6a58c84d;box-shadow:inset 0 1px 0 #ffffff17,0 12px 30px #05021a80}
+.panel,.upgrade-promo,.collection-item,.ranks-intro,.podium-card{background:var(--panel-grad);border:1px solid #6a58c84d;box-shadow:inset 0 1px 0 #ffffff17,0 12px 30px #05021a80}
 .eyebrow{color:#ffcf4a;text-shadow:0 0 12px #ffb52e40}
 .text-button{color:#ffd970}.text-button:hover{color:#fff3c0}
 .positive{color:#5cf2b8}.negative{color:#ff7d97}
@@ -118,3 +118,18 @@ input{background:#140e34;border-color:#5b4bb0;color:#f7f4ff}input::placeholder{c
 }
 
 @keyframes timer-urgent{50%{box-shadow:0 0 30px #ff3d6ecc}}
+
+/* Trainer + leaderboard */
+.profile-hero-art{background:radial-gradient(circle at 50% 28%,#ffc83d40,#7b3cff33 42%,#18113d 78%);border-color:#ffc83d55;box-shadow:inset 0 1px 0 #ffffff26,0 0 28px #ffc83d33}
+.status-chip{border-color:#8a75ff55;background:#2a2166aa;color:#ece6ff}
+.profile-stat-grid>span,.balance-meta{background:#140e34aa;border-color:#6a58c84d}
+.profile-shortcuts button{background:#1a1342;border-color:#6a58c866}
+.profile-shortcuts button:hover{background:#2a2166;border-color:#ffc83d88}
+.lock-badge{background:#2a2166;border-color:#7a68e066;color:#ddd5ff}
+.token-position{background:#140e34aa;border-color:#6a58c84d}
+.history-icon{background:#2a2166;border-color:#7a68e066}
+.ranks-you{background:linear-gradient(180deg,#4a331488,#23184acc);border-color:#ffc83d66;box-shadow:inset 0 1px 0 #ffc83d33,0 0 22px #ffc83d22}
+.podium-card.is-gold{background:linear-gradient(180deg,#4a3814,#2a2166 70%);border-color:#ffc83d99}
+.podium-card.is-silver{background:linear-gradient(180deg,#2c3550,#23184a 72%);border-color:#c5d4ee66}
+.podium-card.is-bronze{background:linear-gradient(180deg,#4a2a18,#23184a 72%);border-color:#d08a5866}
+.rank-row.is-you{background:#ffc83d1f;border-color:#ffc83d66}

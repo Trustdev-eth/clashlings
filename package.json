@@ -9,6 +9,8 @@
     "install:ci": "bash scripts/install-pnpm.sh",
     "dev": "node scripts/run-framework.mjs dev",
     "realtime:dev": "wrangler dev --config services/realtime/wrangler.jsonc --local --compatibility-date 2026-05-22 --ip 127.0.0.1 --port 8787 --persist-to .wrangler/realtime-state",
+    "adapter:dev": "node services/contracts/adapter/src/index.mjs",
+    "test:contracts": "node --test tests/contracts.test.mjs && node --test services/contracts/adapter/test/*.test.mjs",
     "build": "node scripts/run-framework.mjs build",
     "start": "node --import ./scripts/sites-env.mjs ./node_modules/wrangler/bin/wrangler.js dev --config dist/server/wrangler.json --local --persist-to .wrangler/state --ip 127.0.0.1 --inspector-port 0",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",

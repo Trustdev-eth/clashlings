@@ -16,13 +16,15 @@ export async function signLogin(challenge){
  if(!chosen)throw new Error('Connect your wallet again.');
  const [result]=await chosen.features['solana:signMessage'].signMessage({account,message});if(!result?.signature||result.signedMessage.length!==message.length||result.signedMessage.some((v,i)=>v!==message[i]))throw new Error('The wallet returned an unsupported sign-in format.');return base64url(result.signature);
 }
+const CHAINS=new Set(['solana:mainnet','solana:devnet','solana:testnet','solana:localnet']);
 export async function sendTransaction(proposal){
  if(!account||!chosen)throw new Error('Connect your signed-in wallet first.');
- if(proposal.chain!=='solana:mainnet')throw new Error('Unsupported transaction network.');
+ const chain=proposal.chain||'solana:mainnet';
+ if(!CHAINS.has(chain))throw new Error('Unsupported transaction network.');
  if(Date.now()>proposal.expiresAt)throw new Error('This transaction request expired. Start again.');
  if(chosen==='relay'){const result=await relay.request({method:'solana_signAndSendTransaction',params:{transaction:proposal.transaction,sendOptions:{skipPreflight:false,preflightCommitment:'confirmed'}}},account.chain);return result.signature;}
  const feature=chosen.features['solana:signAndSendTransaction'];if(!feature)throw new Error('This wallet cannot send Solana transactions.');
- const [result]=await feature.signAndSendTransaction({account,chain:'solana:mainnet',transaction:unb64(proposal.transaction),options:{commitment:'finalized',preflightCommitment:'confirmed'}});return encode58(result.signature);
+ const [result]=await feature.signAndSendTransaction({account,chain,transaction:unb64(proposal.transaction),options:{commitment:'finalized',preflightCommitment:'confirmed'}});return encode58(result.signature);
 }
 export async function disconnectWallet(){try{if(chosen==='relay')await relay?.disconnect();else await chosen?.features['standard:disconnect']?.disconnect();}finally{chosen=null;account=null;}}
 export const currentWallet=()=>account?.address||null;

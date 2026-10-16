@@ -15,7 +15,7 @@ Browser → realtime Worker → one SQLite Durable Object per match: authenticat
 Match object → Sites authenticated internal endpoints: bootstrap immutable participants/decks/levels/price baseline; shared Pyth market cache; persist terminal outcome and idempotent settlement.
 Sites → D1: transactional account ledger, reservations, final results, daily claims, wallet mappings and contract receipts. Combat frames never write D1 in realtime mode.
 Sites → Pyth Hermes: one batch for the roster, with a database lease and in-isolate single-flight. Match objects consume this shared cache every `MARKET_INTERVAL` seconds (`public/game/tokens.js`).
-Sites → owner's contract adapter: prepared Solana transactions and independently verified finalized escrow/staking receipts. Contracts and token issuance are outside this repository.
+Sites → contract adapter: prepared Solana transactions and independently verified finalized escrow/staking receipts. The arena program and adapter live in `services/contracts`. Token issuance (the SPL mint) remains owner-supplied.
 
 ## Match protocol
 

@@ -1,5 +1,5 @@
 import {packPacket} from '../../public/game/wire.js';
-import {verifyToken,verifyService,signedHeaders} from '../../lib/security.js';
+import {verifyToken,verifyService,signedHeaders,sameSiteOrigin} from '../../lib/security.js';
 import {advanceMatch,runCommand,envelope} from '../../lib/match-engine.js';
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json','Cache-Control':'no-store'}});
 async function site(env,path,data){const body=JSON.stringify(data),options={method:'POST',headers:await signedHeaders(body,env.REALTIME_SHARED_SECRET),body,signal:AbortSignal.timeout(7000)},response=env.SITES?await env.SITES.fetch('https://sites.internal/api/internal/'+path,options):await fetch(new URL('/api/internal/'+path,env.SITE_ORIGIN),options);if(!response.ok)throw new Error('Account service unavailable');return response.json();}
@@ -12,7 +12,7 @@ export default {
    if(match[2]==='socket'){
     if(request.headers.get('Upgrade')?.toLowerCase()!=='websocket')return json({error:'WebSocket upgrade required.'},426);
     const claims=await verifyToken(url.searchParams.get('ticket'),env.REALTIME_SHARED_SECRET,{aud:'arena-room'});
-    if(!claims||claims.match!==match[1]||claims.origin!==env.SITE_ORIGIN||request.headers.get('Origin')!==env.SITE_ORIGIN)return json({error:'Connection ticket is invalid or expired.'},403);
+    if(!claims||claims.match!==match[1]||!sameSiteOrigin(claims.origin,env.SITE_ORIGIN)||!sameSiteOrigin(request.headers.get('Origin'),env.SITE_ORIGIN))return json({error:'Connection ticket is invalid or expired.'},403);
    }else{if(request.method!=='POST')return json({error:'POST required.'},405);const raw=await request.clone().text();if(raw.length>4096||!await verifyService(request,raw,env.REALTIME_SHARED_SECRET))return json({error:'Service authentication required.'},401);}
    return env.MATCHES.getByName(match[1]).fetch(request);
   }catch(error){console.warn('Realtime gateway error');return json({error:'Match service is reconnecting.'},503);}
@@ -54,7 +54,7 @@ export class MatchRoom {
    const url=new URL(request.url),id=url.pathname.split('/')[2],operation=url.pathname.split('/')[3];await this.bootstrap(id);
    if(operation==='socket'){
     const claims=await verifyToken(url.searchParams.get('ticket'),this.env.REALTIME_SHARED_SECRET,{aud:'arena-room'});
-    if(!claims||claims.match!==this.room.row.id||claims.origin!==this.env.SITE_ORIGIN||request.headers.get('Origin')!==this.env.SITE_ORIGIN||![0,1].includes(claims.side)||this.room.participants[claims.side]!==claims.player||typeof claims.jti!=='string')return json({error:'Not a participant.'},403);
+    if(!claims||claims.match!==this.room.row.id||!sameSiteOrigin(claims.origin,this.env.SITE_ORIGIN)||!sameSiteOrigin(request.headers.get('Origin'),this.env.SITE_ORIGIN)||![0,1].includes(claims.side)||this.room.participants[claims.side]!==claims.player||typeof claims.jti!=='string')return json({error:'Not a participant.'},403);
     if(await this.ctx.storage.get('ticket:'+claims.jti))return json({error:'Connection ticket was already used.'},409);
     await this.ctx.storage.put('ticket:'+claims.jti,claims.exp);this.room.connections??={};this.room.connections[claims.side]=claims.jti;await this.save();
     for(const old of this.ctx.getWebSockets('side:'+claims.side)){try{old.close(4001,'A new connection replaced this one');}catch{}}

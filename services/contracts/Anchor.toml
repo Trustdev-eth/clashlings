@@ -1,0 +1,19 @@
+[toolchain]
+package_manager = "pnpm"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+clashlings = "95knjFtSkTZS6vj7aJgFa5Ty8ArDKZmSnwfGyqAhLZom"
+
+[programs.localnet]
+clashlings = "95knjFtSkTZS6vj7aJgFa5Ty8ArDKZmSnwfGyqAhLZom"
+
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "node --test adapter/test/*.test.mjs"
