@@ -29,6 +29,13 @@
       "when": 1792064272917,
       "tag": "0003_fancy_dakota_north",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1792260000000,
+      "tag": "0004_token_earned",
+      "breakpoints": true
     }
   ]
 }

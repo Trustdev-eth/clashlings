@@ -2,7 +2,7 @@ import {PublicKey} from '@solana/web3.js';
 import {encode58} from '../../../../lib/security.js';
 import {asInt,decodeEscrow,decodeStakePosition,ESCROW_LOCKED,ESCROW_REFUNDED,instructionName} from './logic.mjs';
 import {mintKey,programId} from './program.mjs';
-import {accountInfo,finalizedTransaction} from './rpc.mjs';
+import {accountInfo,accountsInfo,finalizedTransaction} from './rpc.mjs';
 
 export async function verifyIntent(conn,env,request){
  const program=programId(env),mint=mintKey(env);
@@ -48,10 +48,9 @@ export async function verifyIntent(conn,env,request){
 }
 
 export async function readPositions(conn,env,payload){
- const program=programId(env),mint=mintKey(env);
- const positions=[];
- for(const item of payload.positions||[]){
-  const info=await accountInfo(conn,item.position);
+ const program=programId(env),mint=mintKey(env),items=payload.positions||[],infos=await accountsInfo(conn,items.map(item=>item.position)),positions=[];
+ for(let i=0;i<items.length;i++){
+  const item=items[i],info=infos[i];
   if(!info||!info.owner.equals(program)){positions.push({position:item.position,active:false});continue;}
   try{
    const parsed=decodeStakePosition(info.data);

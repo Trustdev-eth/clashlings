@@ -1,4 +1,6 @@
 /* Trainer and Leaderboard hub layouts. */
+.rewards-earn .wallet-amount{margin:18px 0 8px}
+.rewards-earn .milestone-list.feed-list{display:grid;gap:0}
 
 .hub-page{display:grid;gap:18px;max-width:1180px;margin:0 auto;padding-bottom:8px}
 .hub-page .panel{padding:22px}
